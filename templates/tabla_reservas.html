@@ -1,0 +1,29 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Bienvenida{%endblock%}
+
+{%block cabecera%}
+<h3>Aquí tienes tu histórico de reservas, {{nombre}}:</h3>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<table id = "tabla">
+    <thead>
+       {% for col in columnas %}
+       <th>{{col.capitalize()}}</th>
+       {% endfor %}
+    </thead>
+    
+    {% for fila in filas %}
+       <tr>
+          {% for col in columnas %}
+          <td>{{fila[col]}}</td>
+          {% endfor %}
+       </tr>
+    {% endfor %}
+ </table>
+
+
+{%endblock%}

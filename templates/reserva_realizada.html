@@ -1,0 +1,17 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Reserva{%endblock%}
+
+
+{%block cuerpo%}
+
+{% if insertado %}
+    <h2>Gracias por tu reserva, {{nombre}}.</h2>
+{% else %}
+    <h2>Lo sentimos, {{nombre}}, no hemos podido realizar la reserva.</h2>
+{% endif %}
+
+<p><a href = "{{url_for('home')}}">Volver a la página principal.</a></p>
+
+
+{%endblock%}

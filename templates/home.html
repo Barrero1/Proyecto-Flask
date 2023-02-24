@@ -1,0 +1,26 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Bienvenida{%endblock%}
+
+{%block cabecera%}
+<h1>Bienvenido a nuestra página de reservas</h1>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<p>Accede con tu usuario y contraseña:</p>
+<div>
+    <form action = "{{url_for('reserva')}}" method="POST">
+        <p><input type="email" name="email" placeholder="Dirección de correo"></p>
+        <p><input type="password" name="password" placeholder="Contraseña"></p>
+        <p><input type="submit" name = "reserva" value = "Reservar"></p>
+        <p><input type="submit" name = "get_reservas" value = "Ver reservas previas" formaction="{{url_for('get_reservas')}}"></p>
+    </form>
+</div>
+
+<br>
+<p><a href = "{{url_for('registro')}}">Regístrate</a></p>
+
+
+{%endblock%}

@@ -1,0 +1,23 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Registro{%endblock%}
+
+{%block cabecera%}
+<h1>¡Regístrate!</h1>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<p>Rellena tus datos:</p>
+<div>
+    <form action = "{{url_for('registro')}}" method="POST">
+        <p><input type="text" name="nombre" placeholder="Nombre"></p>
+        <p><input type="email" name="email" placeholder="Dirección de correo"></p>
+        <p><input type="password" name="password" placeholder="Contraseña"></p>
+        <p><input type="submit" value = "Acceder"></p>
+    </form>
+</div>
+
+
+{%endblock%}

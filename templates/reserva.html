@@ -1,0 +1,32 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Reserva{%endblock%}
+
+{%block cabecera%}
+<h1>Hola, {{nombre}}</h1>
+<h2>¿Quieres reservar un hotel?</h2>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<div>
+    <form action = "{{url_for('gestion_reserva')}}" method ="POST">
+      <p>
+        <select name="ciudad">
+          <option value="Bilbao">Bilbao</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Barcelona">Barcelona</option>
+       </select>
+      </p>
+        <p><input type="date" name="fecha_in" placeholder="Fecha de entrada"></p>
+        <p><input type="date" name="fecha_out" placeholder="Fecha de salida"></p>
+        <p><input type="submit" value = "Acceder"></p>
+    </form>
+</div>
+
+
+<p><a href = "{{url_for('home')}}">Volver a la página principal.</a></p>
+
+
+{%endblock%}
