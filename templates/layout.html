@@ -17,16 +17,31 @@
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
-    /* Set gray background color and 100% height */
+    /* Set background color and 160% height */
     .sidenav {
       padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
+      background-color: #1e1c1c;
+      height: 160%;
     }
-    
+      /* Set black background color, white text and some padding */
+    body {
+      background-color: rgb(186, 255, 179);
+      font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+      /* Set gray background color and 100% height */
+    input {
+      border-radius: 20px;
+      border: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 30%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #555;
+      background-color: rgb(32, 209, 16);
       color: white;
       padding: 15px;
     }
@@ -43,7 +58,7 @@
     #tabla {
      font-family: Arial, Helvetica, sans-serif;
      border-collapse: collapse;
-     width: 60%;
+     width: 40%;
      margin-left: auto;
      margin-right: auto;
    }
@@ -53,16 +68,20 @@
      padding: 8px;
    }
    
-   #tabla tr:nth-child(even){background-color: #f2f2f2;}
+   #tabla tr:nth-child(even){background-color: #eedddd82;}
    
-   #tabla tr:hover {background-color: #ddd;}
+   #tabla tr:hover {
+    background-color: rgb(25, 44, 27);
+    color: #ddd;}
    
    #tabla th {
      padding-top: 12px;
      padding-bottom: 12px;
      text-align: left;
-     background-color: #687772;
+     background-color: #4637378f;
      color: white;
+
+
    }
 
   </style>
@@ -77,11 +96,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#"> Reservas</a>
+      <a class="navbar-brand" href="#"> Musicota</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="{{url_for('home')}}">Principal</a></li>
+        <li><a href="{{url_for('home')}}">Inicio</a></li>
       </ul>
     </div>
   </div>
@@ -91,12 +110,16 @@
   <div class="row content">
     <div class="col-sm-2 sidenav">
     </div>
-    <div class="col-sm-8 text-left"> 
+    <div class="col-sm-8"> 
       {%block cabecera%}
+      <img src="imagenes/spotify.jpg" alt="No se ha podido cargar la foto">
+
       <br>
       {%endblock%}
       <br><br>
       {%block cuerpo%}
+      <img src="imagenes/spotify.jpg" alt="No se ha podido cargar la foto">
+
       <br>
       {%endblock%}
     </div>
@@ -106,7 +129,8 @@
 </div>
 
 <footer class="container-fluid text-center">
-  <p>Copyright by me.</p>
+  <p>Copyright by spotify.</p>
+  <img src="imagenes/spotify.jpg" alt="No se ha podido cargar la foto">
 </footer>
 
 </body>

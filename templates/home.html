@@ -3,24 +3,31 @@
 {%block titulo%}Bienvenida{%endblock%}
 
 {%block cabecera%}
-<h1>Bienvenido a nuestra página de reservas</h1>
+<h1><em><strong>Bienvenido a nuestra página de analisis musical</strong></em> </h1>
 {%endblock%}
 
 
 {%block cuerpo%}
 
-<p>Accede con tu usuario y contraseña:</p>
+<p>Inicia sesion con tu telefono y contraseña o crea una nueva cuenta:</p>
 <div>
-    <form action = "{{url_for('reserva')}}" method="POST">
-        <p><input type="email" name="email" placeholder="Dirección de correo"></p>
-        <p><input type="password" name="password" placeholder="Contraseña"></p>
-        <p><input type="submit" name = "reserva" value = "Reservar"></p>
-        <p><input type="submit" name = "get_reservas" value = "Ver reservas previas" formaction="{{url_for('get_reservas')}}"></p>
+    <form action = "{{url_for('artistas')}}" method="POST">
+        <p><input type="tel" name="telefono" placeholder="Numero de telefono" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" title="Se necesita un numero de telefono con el formato 'XXX XXX XXX' donde X es cualquier numero del 1 al 9 (con espacios cada 3 digitos)"required></p>
+        <p><input type="password" name="password" placeholder="Contraseña" required></p><br><br>
+        <p><input type="submit" name = "reserva" value = "Artista Favorito actual"></p>
+        <p><input type="submit" name = "get_reservas" value = "Ver historial de tus artistas favoritos" formaction="{{url_for('get_reservas')}}"></p>
+        <p><input type="submit" name = "grafico" value = "Analisis musical" formaction="{{url_for('grafico')}}"></p>
+    </form>
+</div>
+<br><br><br>
+<br><br><br>
+<div>
+    <form action = "{{url_for('registro')}}" method="GET">
+        <p><input type="submit" name = "registro" value = "Registrarse"></p>
     </form>
 </div>
 
-<br>
-<p><a href = "{{url_for('registro')}}">Regístrate</a></p>
-
-
 {%endblock%}
+Telephone: <input type="tel" name="telephone" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" title="Se necesita un numero de telefono con el formato 'XXX XXX XXX' donde X es cualquier numero del 1 al 10 "required>
+
+<input type="submit" value="Send data">

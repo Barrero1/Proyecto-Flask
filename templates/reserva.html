@@ -4,29 +4,36 @@
 
 {%block cabecera%}
 <h1>Hola, {{nombre}}</h1>
-<h2>¿Quieres reservar un hotel?</h2>
+<h2>¿Quien es tu artista favorito ?</h2>
 {%endblock%}
 
 
 {%block cuerpo%}
 
-<div>
+<div> 
     <form action = "{{url_for('gestion_reserva')}}" method ="POST">
-      <p>
-        <select name="ciudad">
-          <option value="Bilbao">Bilbao</option>
-          <option value="Madrid">Madrid</option>
-          <option value="Barcelona">Barcelona</option>
-       </select>
-      </p>
+      <label for="fruta">Elige una artista:</label>
+      <input type="text" name="artista" autocomplete="on" list="artistas">
+      
+      <datalist id="artistas">
+        {% for x in artistas %}
+          <option value= {{x}}>
+            {% endfor %}
+      </datalist>
+      
         <p><input type="date" name="fecha_in" placeholder="Fecha de entrada"></p>
         <p><input type="date" name="fecha_out" placeholder="Fecha de salida"></p>
         <p><input type="submit" value = "Acceder"></p>
     </form>
 </div>
+<br><br><br>
+<br><br><br>
+<div>
+  <form action = "{{url_for('home')}}" method="GET">
+      <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+  </form>
+</div>
 
-
-<p><a href = "{{url_for('home')}}">Volver a la página principal.</a></p>
 
 
 {%endblock%}

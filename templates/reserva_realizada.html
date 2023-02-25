@@ -10,8 +10,10 @@
 {% else %}
     <h2>Lo sentimos, {{nombre}}, no hemos podido realizar la reserva.</h2>
 {% endif %}
-
-<p><a href = "{{url_for('home')}}">Volver a la página principal.</a></p>
-
-
+<br><br><br>
+<div>
+    <form action = "{{url_for('home')}}" method="GET">
+        <p><input type="submit" name = "home" value = "Volver a la página principal."></p>
+    </form>
+</div>
 {%endblock%}

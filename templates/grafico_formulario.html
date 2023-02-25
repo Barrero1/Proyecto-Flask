@@ -1,0 +1,32 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Reserva{%endblock%}
+
+{%block cabecera%}
+<h1>Hola, {{nombre}}</h1>
+<h2>Que tipo de visualizacion quieres hacer?</h2>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<div> 
+    <form action = "{{url_for('grafico_variables')}}" method ="POST">
+      <label for="fruta">Elige un tipo de grafico:</label>
+      <input type="text" name="grafico" autocomplete="on" list="grafico">
+      
+      <datalist id="grafico">
+        <option value= 'histograma'>
+        <option value= 'pointplot'>
+        <option value= 'boxplot'>
+      </datalist>
+        <p><input type="submit" value = "Acceder"></p>
+    </form>
+</div>
+
+<div>
+  <form action = "{{url_for('home')}}" method="GET">
+      <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+  </form>
+</div>
+{%endblock%}

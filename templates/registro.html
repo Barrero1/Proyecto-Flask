@@ -9,12 +9,11 @@
 
 {%block cuerpo%}
 
-<p>Rellena tus datos:</p>
 <div>
-    <form action = "{{url_for('registro')}}" method="POST">
+    <form action = "{{url_for('artistas')}}" method="POST">
         <p><input type="text" name="nombre" placeholder="Nombre"></p>
-        <p><input type="email" name="email" placeholder="Dirección de correo"></p>
-        <p><input type="password" name="password" placeholder="Contraseña"></p>
+        <p><input type="tel" name="telefono" placeholder="Numero de telefono" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" title="Se necesita un numero de telefono con el formato 'XXX XXX XXX' donde X es cualquier numero del 1 al 9 (con espacios cada 3 digitos)"required></p>
+        <p><input type="password" name="password" placeholder="Contraseña" required></p><br><br>'grafico')}}"></p>
         <p><input type="submit" value = "Acceder"></p>
     </form>
 </div>

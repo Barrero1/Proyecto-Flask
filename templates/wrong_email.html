@@ -7,8 +7,10 @@
 
 <p>Usuario no registrado.</p>
 
-<p><a href = "{{url_for('registro')}}">Regístrate</a></p>
-
-
+<div>
+    <form action = "{{url_for('registro')}}" method="GET">
+        <p><input type="submit" name = "registro" value = "Registrarse"></p>
+    </form>
+</div>
 
 {%endblock%}

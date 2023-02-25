@@ -1,9 +1,9 @@
-{%extends 'layout.html'%}
 
-{%block titulo%}Bienvenida{%endblock%}
+{%extends 'layout.html'%}
+{%block titulo%}Bienvenido{%endblock%}
 
 {%block cabecera%}
-<h3>Aquí tienes tu histórico de reservas, {{nombre}}:</h3>
+<h2>Aquí tienes tu histórico de artistas favoritos, {{nombre}}:</h2>
 {%endblock%}
 
 
@@ -25,5 +25,11 @@
     {% endfor %}
  </table>
 
-
-{%endblock%}
+ <br><br><br>
+ <br><br><br>
+ <div>
+   <form action = "{{url_for('home')}}" method="GET">
+       <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+   </form>
+ </div>
+ {%endblock%}
