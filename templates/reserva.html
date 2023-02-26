@@ -11,7 +11,7 @@
 {%block cuerpo%}
 
 <div> 
-    <form action = "{{url_for('gestion_reserva')}}" method ="POST">
+    <form action = "{{url_for('gestion_artista')}}" method ="POST">
       <label for="fruta">Elige una artista:</label>
       <input type="text" name="artista" autocomplete="on" list="artistas">
       
@@ -20,9 +20,6 @@
           <option value= {{x}}>
             {% endfor %}
       </datalist>
-      
-        <p><input type="date" name="fecha_in" placeholder="Fecha de entrada"></p>
-        <p><input type="date" name="fecha_out" placeholder="Fecha de salida"></p>
         <p><input type="submit" value = "Acceder"></p>
     </form>
 </div>

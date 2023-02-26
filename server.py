@@ -1,11 +1,18 @@
 from flask import Flask, render_template, request, session
 import bbdd.con_sql as sql
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import os
+import numpy as np
+
 sql.crear_tablas()
 sql.insertar_csv_spotify()
+datos = sql.spotify()
+datos_num = sql.numericas(datos)
+
 app = Flask(__name__)
 app.secret_key = 'Australopitecus'
-
 
 @app.route("/")
 def home():
@@ -18,12 +25,12 @@ def artistas():
     session['telefono'] = telefono
     password = request.form.get("password")
     if not sql.telefono_existe(telefono):
-        return render_template('wrong_email.html')
+        return render_template('telefono_incorrecto.html')
     if not sql.comprobar_pwd(telefono, password):
         return render_template('wrong_pwd.html')
     nombre = sql.consultar_nombre(telefono)
     session['nombre'] = nombre
-    artistas = sql.artistas()
+    artistas = sql.pd_artistas(datos)
     return render_template('reserva.html', nombre = nombre, artistas=artistas)
 
 @app.route("/grafico",methods = ["POST"])
@@ -32,12 +39,12 @@ def grafico():
     session['telefono'] = telefono
     password = request.form.get("password")
     if not sql.telefono_existe(telefono):
-        return render_template('wrong_email.html')
+        return render_template('telefono_incorrecto.html')
     if not sql.comprobar_pwd(telefono, password):
         return render_template('wrong_pwd.html')
     nombre = sql.consultar_nombre(telefono)
     session['nombre'] = nombre
-    artistas = sql.artistas()
+
     return render_template('grafico_formulario.html', nombre = nombre)    
     
 
@@ -46,33 +53,43 @@ def grafico_variables():
     grafico = request.form.get('grafico')
     session['grafico'] = grafico
     if grafico == 'pointplot':
-        var = 2
+        var = range(2)
     else:
-        var = 1
-    return render_template('grafico_variables',variables =var, nombre= session['nombre'])
-    pass
+        var = range(1)
+    variables = datos_num.columns.tolist()
+    return render_template('grafico_variables.html',num_variables =var, nombre= session['nombre'], variables = variables, grafico = session['grafico'])
 
-@app.route("/gestion_reserva", methods = ["POST"])
-def gestion_reserva():
-    ciudad = request.form.get("ciudad")
-    fecha_in = request.form.get("fecha_in")
-    fecha_out = request.form.get("fecha_out")
-    insertado = sql.insert_reserva(session['telefono'], ciudad, fecha_in, fecha_out)
-    return render_template("reserva_realizada.html", insertado = insertado, nombre = session['nombre'])
+@app.route("/grafico_imagen",methods = ["POST"])
+def grafico_imagen():
+    grafico = request.form.get('grafico')
+    session['grafico'] = grafico
+    if grafico == 'pointplot':
+        pass
+    elif grafico == 'histogram':
+        pass
+    elif grafico == 'boxplot':
+        pass
+    return render_template('grafico_imagen.html', nombre= session['nombre'], grafico = session['grafico'])
+
+@app.route("/gestion_artista", methods = ["POST"])
+def gestion_artista():
+    artista = request.form.get("artista")
+    insertado = sql.insert_artista(session['telefono'], artista)
+    return render_template("artista_seleccionado.html", insertado = insertado, nombre = session['nombre'])
 
 
-@app.route("/get_reservas", methods = ["POST"])
-def get_reservas():
+@app.route("/get_artistas", methods = ["POST"])
+def get_artistas():
     telefono = request.form.get("telefono")
     session['telefono'] = telefono
     password = request.form.get("password")
     if not sql.telefono_existe(telefono):
-        return render_template('wrong_email.html')
+        return render_template('telefono_incorrecto.html')
     if not sql.comprobar_pwd(telefono, password):
         return render_template('wrong_pwd.html')
     nombre = sql.consultar_nombre(telefono) 
     session['nombre'] = nombre
-    filas_bd, columnas_bd = sql.get_reservas(session['telefono'])
+    filas_bd, columnas_bd = sql.get_artistas(session['telefono'])
     return render_template('tabla_reservas.html', nombre = nombre, columnas = columnas_bd, filas = filas_bd)
 
 

@@ -1,14 +1,14 @@
 {%extends 'layout.html'%}
 
-{%block titulo%}Reserva{%endblock%}
+{%block titulo%}Artista seleccionado{%endblock%}
 
 
 {%block cuerpo%}
 
 {% if insertado %}
-    <h2>Gracias por tu reserva, {{nombre}}.</h2>
+    <h2>¡ {{nombre}} ya sabemos cual es tu artista favorito del momento!.</h2>
 {% else %}
-    <h2>Lo sentimos, {{nombre}}, no hemos podido realizar la reserva.</h2>
+    <h2>Lo sentimos, {{nombre}}, no hemos podido saber cual es tu artista favorito actualmente.</h2>
 {% endif %}
 <br><br><br>
 <div>

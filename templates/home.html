@@ -15,7 +15,7 @@
         <p><input type="tel" name="telefono" placeholder="Numero de telefono" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" title="Se necesita un numero de telefono con el formato 'XXX XXX XXX' donde X es cualquier numero del 1 al 9 (con espacios cada 3 digitos)"required></p>
         <p><input type="password" name="password" placeholder="Contraseña" required></p><br><br>
         <p><input type="submit" name = "reserva" value = "Artista Favorito actual"></p>
-        <p><input type="submit" name = "get_reservas" value = "Ver historial de tus artistas favoritos" formaction="{{url_for('get_reservas')}}"></p>
+        <p><input type="submit" name = "get_reservas" value = "Ver historial de tus artistas favoritos" formaction="{{url_for('get_artistas')}}"></p>
         <p><input type="submit" name = "grafico" value = "Analisis musical" formaction="{{url_for('grafico')}}"></p>
     </form>
 </div>

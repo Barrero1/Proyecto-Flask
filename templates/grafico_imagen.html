@@ -1,0 +1,20 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Imagen{%endblock%}
+
+{%block cabecera%}
+<h1>Hola, {{nombre}}</h1>
+<h2>Tu analisis musical del grafico {{grafico}} ha resultado asi:</h2>
+{%endblock%}
+
+
+{%block cuerpo%}
+<img src="/static/imagenes/histograma.png" alt="No se ha podido cargar la foto" width="700px", height="500px"></p>
+
+
+<div>
+  <form action = "{{url_for('home')}}" method="GET">
+      <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+  </form>
+</div>
+{%endblock%}

@@ -1,0 +1,33 @@
+{%extends 'layout.html'%}
+
+{%block titulo%}Variables{%endblock%}
+
+{%block cabecera%}
+<h1>Hola, {{nombre}}</h1>
+<h2>Que variables quieres utilizar para el grafico: {{grafico}}</h2>
+{%endblock%}
+
+
+{%block cuerpo%}
+
+<div> 
+    <form action = "{{url_for('grafico_imagen')}}" method ="POST">
+      <label for="fruta">Elige las variables del grafico</label> <br>
+    {% for i in num_variables %}
+      <input type="text" name="variable{{i}}" autocomplete="on" list="variables"> <br>
+    {% endfor %}
+      <datalist id="variables">
+        {% for x in variables %}
+        <option value= {{x}}>
+        {% endfor %}
+      </datalist>
+        <p><input type="submit" value = "Crear"></p>
+    </form>
+</div>
+
+<div>
+  <form action = "{{url_for('home')}}" method="GET">
+      <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+  </form>
+</div>
+{%endblock%}

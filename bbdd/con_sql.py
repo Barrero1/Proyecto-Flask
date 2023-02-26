@@ -1,5 +1,9 @@
 import sqlite3 as sqlite
 import os
+import pandas as pd
+import os
+import numpy as np
+import datetime
 def crear_tablas():
     """Crea base de datos y tabla
 
@@ -8,8 +12,8 @@ def crear_tablas():
     conn = sqlite.connect('proyecto1.db') 
     conn.execute('''CREATE TABLE IF NOT EXISTS users 
     (telefono TEXT PRIMARY KEY NOT NULL, nombre TEXT NOT NULL, password TEXT NULL)''') 
-    conn.execute('''CREATE TABLE IF NOT EXISTS reservas 
-    (telefono TEXT NOT NULL, ciudad TEXT NOT NULL, fecha_in DATE NOT NULL, fecha_out DATE NOT NULL)''') 
+    conn.execute('''CREATE TABLE IF NOT EXISTS artistas 
+    (telefono TEXT NOT NULL, artista TEXT NOT NULL, fecha DATE NOT NULL)''') 
     conn.execute('''CREATE TABLE IF NOT EXISTS spotify 
     (id TEXT NOT NULL, name TEXT NOT NULL, artists TEXT NOT NULL, danceability FLOAT NOT NULL, 
     energy FLOAT NOT NULL, loudness FLOAT NOT NULL, speechiness FLOAT NOT NULL, acousticness FLOAT NOT NULL, 
@@ -17,7 +21,6 @@ def crear_tablas():
     duration_ms INT NOT NULL, ranking INT NOT NULL, ranking_5 TEXT NOT NULL, cluster INT NOT NULL)''') 
     conn.close() 
     return None
-
 def insertar_csv_spotify():
     import csv
     path = os.path.join('datos','spotify_cl.csv')
@@ -33,8 +36,6 @@ def insertar_csv_spotify():
         con.commit()
     finally: # Pase lo que pase, cerramos la conexión
         con.close()
-
-
 def artistas():
     con = sqlite.connect("proyecto1.db")
     cur = con.cursor()
@@ -42,6 +43,25 @@ def artistas():
     a = cur.fetchall()
     con.close()
     return a
+
+
+
+def spotify():
+    path = os.path.join('datos','spotify_cl.csv')
+    datos = pd.read_csv(path)
+    return datos
+    
+def pd_artistas(df):
+    artistas = df['artists'].replace(' ', '_', regex=True)
+    return artistas
+
+def numericas(df):
+    cols_numericas = df.select_dtypes(include=np.number).columns.tolist()
+    cols_numericas = cols_numericas[:-2]# quitar cluster y ranking que no interesa mucho verlo 
+    df_numericas = df[cols_numericas]
+    return df_numericas
+
+
 
 
 def insert_usuario(telefono:str, nombre:str, password:str) -> str:
@@ -60,12 +80,15 @@ def insert_usuario(telefono:str, nombre:str, password:str) -> str:
     return msg
 
 
-def insert_reserva(telefono:str, ciudad:str, fecha_in, fecha_out):
+def insert_artista(telefono:str, artista:str):
     try: # Lo intentamos
         con = sqlite.connect("proyecto1.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO reservas (telefono, ciudad, fecha_in, fecha_out) VALUES (?,?,?,?)",
-        (telefono, ciudad, fecha_in, fecha_out))
+        #fecha = datetime.datetime.now().replace(second=0, microsecond=0)
+        #fecha = fecha.round(datetime.timedelta(hours=1))
+        fecha = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cur.execute("INSERT INTO artistas (telefono, artista, fecha) VALUES (?,?,?)",
+        (telefono, artista, fecha))
         con.commit()
         return True
     except Exception as e: # Si no podemos insertar los datos en la base de datos
@@ -99,12 +122,13 @@ def consultar_nombre(telefono:str):
     con.close()
     return nombre
 
-def get_reservas(telefono):
+def get_artistas(telefono):
     con = sqlite.connect("proyecto1.db")
     con.row_factory = sqlite.Row # 
     cur = con.cursor()
-    cur.execute("SELECT ciudad, fecha_in, fecha_out FROM reservas WHERE telefono = ?", (telefono,)) 
+    cur.execute("SELECT artista, fecha FROM artistas WHERE telefono = ?", (telefono,)) 
     filas_bd = cur.fetchall() # Rows
     columnas_bd = [description[0] for description in cur.description] # Extraemos el nombre nombre de las columnas
     con.close()
     return filas_bd, columnas_bd
+
