@@ -1,9 +1,10 @@
 import sqlite3 as sqlite
 import os
 import pandas as pd
-import os
 import numpy as np
 import datetime
+import seaborn as sns
+import matplotlib.pyplot as plt
 def crear_tablas():
     """Crea base de datos y tabla
 
@@ -14,6 +15,7 @@ def crear_tablas():
     (telefono TEXT PRIMARY KEY NOT NULL, nombre TEXT NOT NULL, password TEXT NULL)''') 
     conn.execute('''CREATE TABLE IF NOT EXISTS artistas 
     (telefono TEXT NOT NULL, artista TEXT NOT NULL, fecha DATE NOT NULL)''') 
+    ################################################################################
     conn.execute('''CREATE TABLE IF NOT EXISTS spotify 
     (id TEXT NOT NULL, name TEXT NOT NULL, artists TEXT NOT NULL, danceability FLOAT NOT NULL, 
     energy FLOAT NOT NULL, loudness FLOAT NOT NULL, speechiness FLOAT NOT NULL, acousticness FLOAT NOT NULL, 
@@ -43,7 +45,7 @@ def artistas():
     a = cur.fetchall()
     con.close()
     return a
-
+########################################################################################################################
 
 
 def spotify():
@@ -132,3 +134,54 @@ def get_artistas(telefono):
     con.close()
     return filas_bd, columnas_bd
 
+
+###### ESTOY SEGURO QUE HAY UNA MANERA DE CONSEGUIR JUNTAR ESTAS FUNCIONES PERO NO LO HE CONSEGUIDO 
+datos = spotify()
+def graficos_hist(columna:str):
+    """Esta función devuelve un histograma de densidad del la columna indicada
+
+    Args:
+        columna (str): columna del dataframe (columna tipo numérica)
+
+    Returns:
+        path: Path donde se va a guardar el grafico en formato png
+    """
+    titulo = 'Boxplot de las columna '+columna
+    fig = sns.distplot(datos[columna], hist=True, kde=True, color='green').set(title=titulo)
+    plt.savefig('./static/imagenes/histograma_'+columna+'.png')
+    path = './static/imagenes/histograma_'+columna+'.png'
+    #Guardo el path para que cuando ejecute el siguiente html me salga la imagen en la pantalla
+    return path 
+
+def graficos_boxplot(columna:str):
+    """Esta función devuelve un boxplot de la columna indicada
+
+    Args:
+        columna (str): columna del dataframe (columna tipo numérica)
+
+    Returns:
+        path: Path donde se va a guardar el grafico en formato png
+    """
+    titulo = 'Boxplot de las columna '+columna
+    fig = sns.boxplot(datos[columna],color='green',palette="Set3", linewidth=2.5,width=0.3).set(title=titulo)
+    plt.savefig('./static/imagenes/boxplot_'+columna+'.png')
+    path = './static/imagenes/boxplot_'+columna+'.png'
+    #Guardo el path para que cuando ejecute el siguiente html me salga la imagen en la pantalla
+    return path 
+
+def graficos_scatterplot(columna:str,columna2:str):
+    """Esta función devuelve un scatter de las columnas indicadas
+
+    Args:
+        columna1 (str): columna del dataframe (columna tipo numérica)
+        columna2 (str): columna del dataframe (columna tipo numérica)
+
+    Returns:
+        plot: histograma de densidad
+    """
+    titulo = 'Pointplot de las columnas '+columna+' y '+columna2
+    fig = sns.scatterplot(x= datos[columna],y = datos[columna2],color = 'lightgreen',palette="Set2", edgecolor="gray", alpha=0.8, s=80).set(title=titulo)
+    plt.savefig('./static/imagenes/scatter_'+columna+'_y_'+columna2+'.png')
+    path = './static/imagenes/scatter_'+columna+'_y_'+columna2+'.png'
+    #Guardo el path para que cuando ejecute el siguiente html me salga la imagen en la pantalla
+    return path 

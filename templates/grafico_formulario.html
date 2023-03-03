@@ -1,6 +1,6 @@
 {%extends 'layout.html'%}
 
-{%block titulo%}Reserva{%endblock%}
+{%block titulo%}Formulario Grafico{%endblock%}
 
 {%block cabecera%}
 <h1>Hola, {{nombre}}</h1>
@@ -17,8 +17,8 @@
       
       <datalist id="grafico">
         <option value= 'histograma'>
-        <option value= 'pointplot'>
         <option value= 'boxplot'>
+        <option value= 'scatterplot'>
       </datalist>
         <p><input type="submit" value = "Acceder"></p>
     </form>

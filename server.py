@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, session
 import bbdd.con_sql as sql
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import os
-import numpy as np
+
 
 sql.crear_tablas()
 sql.insertar_csv_spotify()
@@ -31,7 +27,7 @@ def artistas():
     nombre = sql.consultar_nombre(telefono)
     session['nombre'] = nombre
     artistas = sql.pd_artistas(datos)
-    return render_template('reserva.html', nombre = nombre, artistas=artistas)
+    return render_template('artistas.html', nombre = nombre, artistas=artistas)
 
 @app.route("/grafico",methods = ["POST"])
 def grafico():
@@ -52,7 +48,7 @@ def grafico():
 def grafico_variables():
     grafico = request.form.get('grafico')
     session['grafico'] = grafico
-    if grafico == 'pointplot':
+    if grafico == 'scatterplot':
         var = range(2)
     else:
         var = range(1)
@@ -61,15 +57,15 @@ def grafico_variables():
 
 @app.route("/grafico_imagen",methods = ["POST"])
 def grafico_imagen():
-    grafico = request.form.get('grafico')
-    session['grafico'] = grafico
-    if grafico == 'pointplot':
-        pass
-    elif grafico == 'histogram':
-        pass
-    elif grafico == 'boxplot':
-        pass
-    return render_template('grafico_imagen.html', nombre= session['nombre'], grafico = session['grafico'])
+    columna = request.form.get('variable0')
+    if session['grafico']  == 'scatterplot':
+        columna2 = request.form.get('variable1')
+        path = sql.graficos_scatterplot(columna,columna2)
+    elif session['grafico']  == 'histograma':
+        path = sql.graficos_hist(columna)
+    elif session['grafico']  == 'boxplot':
+        path = sql.graficos_boxplot(columna)
+    return render_template('grafico_imagen.html', nombre= session['nombre'], grafico = session['grafico'],path = path)
 
 @app.route("/gestion_artista", methods = ["POST"])
 def gestion_artista():
@@ -90,7 +86,7 @@ def get_artistas():
     nombre = sql.consultar_nombre(telefono) 
     session['nombre'] = nombre
     filas_bd, columnas_bd = sql.get_artistas(session['telefono'])
-    return render_template('tabla_reservas.html', nombre = nombre, columnas = columnas_bd, filas = filas_bd)
+    return render_template('tabla_artistas.html', nombre = nombre, columnas = columnas_bd, filas = filas_bd)
 
 
 @app.route("/registro", methods = ["GET","POST"])
