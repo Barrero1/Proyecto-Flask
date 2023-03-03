@@ -1,0 +1,18 @@
+
+{%extends 'layout.html'%}
+{%block titulo%}Limpieza{%endblock%}
+
+{%block cabecera%}
+<h2>Se han limpiado todas las fotos pertenecientes a los graficos{{nombre}}:</h2>
+{%endblock%}
+
+
+{%block cuerpo%}
+<img src="/static/limpio.png" alt="No se ha podido cargar la foto"></p>
+
+ <div>
+   <form action = "{{url_for('home')}}" method="GET">
+       <p><input type="submit" name = "registro" value = "Volver a la página principal"></p>
+   </form>
+ </div>
+ {%endblock%}

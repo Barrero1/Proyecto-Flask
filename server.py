@@ -3,7 +3,7 @@ import bbdd.con_sql as sql
 
 
 sql.crear_tablas()
-sql.insertar_csv_spotify()
+#sql.insertar_csv_spotify()
 datos = sql.spotify()
 datos_num = sql.numericas(datos)
 
@@ -99,6 +99,10 @@ def registro():
         return render_template("registro_completado.html", insertado = insertado)
     return render_template("registro.html")
 
+@app.route("/limpiar_imagenes", methods = ["GET"])
+def limpiar_imagenes():
+    sql.limpiar_carpeta_graficos()
+    return render_template("limpiado.html")
 
 if (__name__ == "__main__"):
     app.run(debug = True)

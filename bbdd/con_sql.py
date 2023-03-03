@@ -16,35 +16,37 @@ def crear_tablas():
     conn.execute('''CREATE TABLE IF NOT EXISTS artistas 
     (telefono TEXT NOT NULL, artista TEXT NOT NULL, fecha DATE NOT NULL)''') 
     ################################################################################
-    conn.execute('''CREATE TABLE IF NOT EXISTS spotify 
-    (id TEXT NOT NULL, name TEXT NOT NULL, artists TEXT NOT NULL, danceability FLOAT NOT NULL, 
-    energy FLOAT NOT NULL, loudness FLOAT NOT NULL, speechiness FLOAT NOT NULL, acousticness FLOAT NOT NULL, 
-    instrumentalness FLOAT NOT NULL, liveness FLOAT NOT NULL, valence FLOAT NOT NULL, tempo FLOAT NOT NULL,
-    duration_ms INT NOT NULL, ranking INT NOT NULL, ranking_5 TEXT NOT NULL, cluster INT NOT NULL)''') 
+    # conn.execute('''CREATE TABLE IF NOT EXISTS spotify 
+    # (id TEXT NOT NULL, name TEXT NOT NULL, artists TEXT NOT NULL, danceability FLOAT NOT NULL, 
+    # energy FLOAT NOT NULL, loudness FLOAT NOT NULL, speechiness FLOAT NOT NULL, acousticness FLOAT NOT NULL, 
+    # instrumentalness FLOAT NOT NULL, liveness FLOAT NOT NULL, valence FLOAT NOT NULL, tempo FLOAT NOT NULL,
+    # duration_ms INT NOT NULL, ranking INT NOT NULL, ranking_5 TEXT NOT NULL, cluster INT NOT NULL)''') 
     conn.close() 
     return None
-def insertar_csv_spotify():
-    import csv
-    path = os.path.join('datos','spotify_cl.csv')
-    try: # Lo intentamos
-        con = sqlite.connect("proyecto1.db")
-        cur = con.cursor()
-        with open(path, 'r') as x:
-            csv_reader = csv.reader(x)
-            next(csv_reader) # Fila columnas
-            for fila in csv_reader:
-                cur.execute("INSERT OR IGNORE INTO spotify (id, name, artists, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms, ranking,ranking_5, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (fila[0], fila[1], fila[2], fila[3], fila[4], fila[5], fila[6], fila[7], fila[8], fila[9], fila[10], fila[11], fila[12], fila[13], fila[14],fila[15]))
-        con.commit()
-    finally: # Pase lo que pase, cerramos la conexión
-        con.close()
-def artistas():
-    con = sqlite.connect("proyecto1.db")
-    cur = con.cursor()
-    cur.execute("SELECT artists FROM spotify")
-    a = cur.fetchall()
-    con.close()
-    return a
+
+################################################################################
+# def insertar_csv_spotify():
+#     import csv
+#     path = os.path.join('datos','spotify_cl.csv')
+#     try: # Lo intentamos
+#         con = sqlite.connect("proyecto1.db")
+#         cur = con.cursor()
+#         with open(path, 'r') as x:
+#             csv_reader = csv.reader(x)
+#             next(csv_reader) # Fila columnas
+#             for fila in csv_reader:
+#                 cur.execute("INSERT OR IGNORE INTO spotify (id, name, artists, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms, ranking,ranking_5, cluster) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+#                 (fila[0], fila[1], fila[2], fila[3], fila[4], fila[5], fila[6], fila[7], fila[8], fila[9], fila[10], fila[11], fila[12], fila[13], fila[14],fila[15]))
+#         con.commit()
+#     finally: # Pase lo que pase, cerramos la conexión
+#         con.close()
+# def artistas():
+#     con = sqlite.connect("proyecto1.db")
+#     cur = con.cursor()
+#     cur.execute("SELECT artists FROM spotify")
+#     a = cur.fetchall()
+#     con.close()
+#     return a
 ########################################################################################################################
 
 
@@ -135,7 +137,7 @@ def get_artistas(telefono):
     return filas_bd, columnas_bd
 
 
-###### ESTOY SEGURO QUE HAY UNA MANERA DE CONSEGUIR JUNTAR ESTAS FUNCIONES PERO NO LO HE CONSEGUIDO 
+###### ESTOY SEGURO QUE HAY UNA MANERA DE CONSEGUIR JUNTAR ESTAS FUNCIONES DE ABAJO PERO NO LO HE CONSEGUIDO 
 datos = spotify()
 def graficos_hist(columna:str):
     """Esta función devuelve un histograma de densidad del la columna indicada
@@ -185,3 +187,13 @@ def graficos_scatterplot(columna:str,columna2:str):
     path = './static/imagenes/scatter_'+columna+'_y_'+columna2+'.png'
     #Guardo el path para que cuando ejecute el siguiente html me salga la imagen en la pantalla
     return path 
+
+def limpiar_carpeta_graficos():
+    carpeta = './static/imagenes/'
+    # Jugar con esta aplicacion puede crear muchos graficos 
+    # diferentes que pueden acabar ocupando mucho espacio
+    for archivo in os.listdir(carpeta):
+        ruta_archivo = os.path.join(carpeta, archivo)
+        if os.path.isfile(ruta_archivo):
+            os.remove(ruta_archivo)
+    return None
